@@ -259,7 +259,7 @@ io.on('connection', (socket) => {
       });
     });
 
-    console.log(`Game started in lobby ${code}. Chameleon: ${lobby.players.find(p => p.id === chameleonId)?.name}`);
+    console.log(`Game started in lobby ${code}. Undercover Agent: ${lobby.players.find(p => p.id === chameleonId)?.name}`);
   });
 
   socket.on('submit-clue', ({ code, clue }) => {
@@ -515,5 +515,5 @@ function showFinalResults(lobby) {
 
 const PORT = process.env.PORT || 3456;
 httpServer.listen(PORT, () => {
-  console.log(`🦎 Chameleon Game running on http://localhost:${PORT}`);
+  console.log(`🕵️ Undercover Game running on http://localhost:${PORT}`);
 });

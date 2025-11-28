@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🦎 The Chameleon</title>
+  <title>🕵️ Undercover</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -557,8 +557,8 @@
   <div class="container">
     <!-- Home Screen -->
     <div id="home-screen" class="screen active">
-      <div class="logo">🦎 The Chameleon</div>
-      <p class="subtitle">Blend in. Deceive. Survive.</p>
+      <div class="logo">🕵️ Undercover</div>
+      <p class="subtitle">One of you doesn't belong. Find them.</p>
 
       <div class="card">
         <div class="card-title">Join the Game</div>
@@ -583,7 +583,7 @@
 
     <!-- Lobby Screen -->
     <div id="lobby-screen" class="screen">
-      <div class="logo" style="font-size: 2.5rem;">🦎 The Chameleon</div>
+      <div class="logo" style="font-size: 2.5rem;">🕵️ Undercover</div>
 
       <div class="card" style="max-width: 500px;">
         <div class="card-title">Lobby</div>
@@ -655,7 +655,7 @@
 <!-- Voting Phase -->
         <div id="vote-phase" style="display: none;">
           <h2 style="text-align: center; margin-bottom: 8px;">🗳️ Time to Vote!</h2>
-          <p style="text-align: center; color: var(--text-secondary); margin-bottom: 16px;">Who is the Chameleon?</p>
+          <p style="text-align: center; color: var(--text-secondary); margin-bottom: 16px;">Who is the Undercover Agent?</p>
 
           <div class="vote-info" id="vote-info">0/0 votes cast</div>
 
@@ -664,18 +664,18 @@
           <button class="btn btn-primary" id="submit-vote-btn" disabled>Cast Your Vote</button>
         </div>
 
-        <!-- Chameleon Guess Phase -->
+<!-- Spy Guess Phase -->
         <div id="guess-phase" style="display: none;">
           <div style="text-align: center;">
             <div style="font-size: 4rem; margin-bottom: 16px;">🎯</div>
-            <h2 style="margin-bottom: 8px;">Chameleon Caught!</h2>
+            <h2 style="margin-bottom: 8px;">Agent Caught!</h2>
             <p style="color: var(--text-secondary); margin-bottom: 24px;">
-              <span id="caught-chameleon-name">The Chameleon</span> was identified!
+              <span id="caught-chameleon-name">The Agent</span> was identified!
             </p>
-
+            
             <div id="chameleon-guess-input" style="display: none;">
               <div style="background: rgba(255, 166, 87, 0.1); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                <p style="font-size: 1.1rem; margin-bottom: 12px;">🦎 You have one chance to guess the word!</p>
+                <p style="font-size: 1.1rem; margin-bottom: 12px;">🕵️ You have one chance to guess the word!</p>
                 <p style="color: var(--text-secondary); margin-bottom: 16px;">If you guess correctly, you still win!</p>
 
                 <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px;">Category: <strong id="guess-category"></strong></p>
@@ -690,9 +690,8 @@
 
             <div id="waiting-for-guess" style="display: none;">
               <div style="background: var(--bg-dark); border-radius: 12px; padding: 24px;">
-                <div class="timer" id="guess-timer" style="font-size: 2rem;">30</div>
                 <p style="color: var(--text-secondary);">
-                  Waiting for <span id="guessing-player-name">the Chameleon</span> to guess the word...
+                  Waiting for <span id="guessing-player-name">the Agent</span> to guess the word...
                 </p>
               </div>
             </div>
@@ -707,7 +706,7 @@
             <p id="result-message" style="color: var(--text-secondary);"></p>
 
             <div class="chameleon-reveal">
-              <p style="font-size: 0.9rem; color: var(--text-secondary);">The Chameleon was:</p>
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">The Undercover Agent was:</p>
               <p style="font-size: 1.5rem; font-weight: 700; color: var(--accent-orange);" id="chameleon-name">???</p>
               <p style="margin-top: 12px; font-size: 0.9rem; color: var(--text-secondary);">The secret word was:</p>
               <p style="font-size: 1.3rem; font-weight: 700; color: var(--accent-lime);" id="reveal-word">???</p>
@@ -802,7 +801,7 @@ socket.on('disconnect', (reason) => {
         window.history.replaceState({}, '', url);
 
         // Also save to localStorage as backup
-        localStorage.setItem('chameleon_session', JSON.stringify({
+        localStorage.setItem('undercover_session', JSON.stringify({
           lobbyCode,
           playerName: myName,
           timestamp: Date.now()
@@ -822,7 +821,7 @@ socket.on('disconnect', (reason) => {
 
       // Fallback to localStorage
       try {
-        const data = localStorage.getItem('chameleon_session');
+        const data = localStorage.getItem('undercover_session');
         if (data) {
           const session = JSON.parse(data);
           // Session expires after 2 hours
@@ -835,7 +834,7 @@ socket.on('disconnect', (reason) => {
     }
 
     function clearSession() {
-      localStorage.removeItem('chameleon_session');
+      localStorage.removeItem('undercover_session');
       const url = new URL(window.location);
       url.searchParams.delete('room');
       url.searchParams.delete('name');
@@ -1143,13 +1142,13 @@ socket.on('game-started', ({ category, allWords, secretWord, isChameleon: chamel
       resultsPhase.style.display = 'none';
       document.getElementById('guess-phase').style.display = 'none';
 
-      // Set role info
-      document.getElementById('role-icon').textContent = isChameleon ? '🦎' : '🔍';
-      document.getElementById('role-title').textContent = isChameleon ? 'You are the Chameleon!' : 'You know the word!';
+// Set role info
+      document.getElementById('role-icon').textContent = isChameleon ? '🕵️' : '🔍';
+      document.getElementById('role-title').textContent = isChameleon ? 'You are Undercover!' : 'You know the word!';
       document.getElementById('role-title').className = 'role-title ' + (isChameleon ? 'chameleon' : 'normal');
       document.getElementById('game-category').textContent = category;
       document.getElementById('secret-word-display').textContent = secretWord || '???';
-      document.getElementById('role-hint').textContent = isChameleon
+      document.getElementById('role-hint').textContent = isChameleon 
         ? 'Blend in! Give a clue that sounds like you know the word.'
         : 'Give a clue that proves you know the word, but don\'t make it too obvious!';
 
@@ -1202,11 +1201,11 @@ function updateCurrentPlayer(currentPlayer, roundEndTime) {
         `<div class="word-item">${w}</div>`
       ).join('');
 
-      // Show secret word if not chameleon
+      // Show secret word if not the spy
       if (currentGameData.secretWord) {
         document.getElementById('clue-phase-secret').innerHTML = `<span class="secret-word" style="font-size: 1.5rem; padding: 8px 16px;">Secret: ${currentGameData.secretWord}</span>`;
       } else {
-        document.getElementById('clue-phase-secret').innerHTML = `<span style="color: var(--accent-orange);">🦎 You're the Chameleon - blend in!</span>`;
+        document.getElementById('clue-phase-secret').innerHTML = `<span style="color: var(--accent-orange);">🕵️ You're Undercover - blend in!</span>`;
       }
 
       // Get current player info from the first clue item
@@ -1310,25 +1309,25 @@ document.getElementById('submit-vote-btn').disabled = true;
       const iWasChameleon = isChameleon;
       let resultIcon, resultTitle, resultMessage;
 
-      if (caughtChameleon && chameleonGuessedCorrectly) {
-        // Chameleon was caught but guessed correctly - they win!
-        resultIcon = iWasChameleon ? '🦎' : '😱';
-        resultTitle = iWasChameleon ? 'You Guessed It!' : 'Chameleon Wins!';
+if (caughtChameleon && chameleonGuessedCorrectly) {
+        // Agent was caught but guessed correctly - they win!
+        resultIcon = iWasChameleon ? '🕵️' : '😱';
+        resultTitle = iWasChameleon ? 'You Guessed It!' : 'Agent Wins!';
         resultMessage = `${chameleonName} was caught but correctly guessed "${chameleonGuess}"!`;
         document.getElementById('result-title').className = 'result-title ' + (iWasChameleon ? 'success' : 'failure');
       } else if (caughtChameleon) {
-        // Chameleon was caught and guessed wrong
+        // Agent was caught and guessed wrong
         resultIcon = iWasChameleon ? '😱' : '🎉';
         resultTitle = iWasChameleon ? 'You Got Caught!' : 'You Win!';
-        resultMessage = chameleonGuess
+        resultMessage = chameleonGuess 
           ? `${chameleonName} was caught and guessed "${chameleonGuess}" - wrong!`
-          : `The group successfully identified ${chameleonName} as the Chameleon!`;
+          : `The group successfully identified ${chameleonName} as the Undercover Agent!`;
         document.getElementById('result-title').className = 'result-title ' + (iWasChameleon ? 'failure' : 'success');
       } else {
-        // Chameleon escaped
-        resultIcon = iWasChameleon ? '🦎' : '😅';
-        resultTitle = iWasChameleon ? 'You Escaped!' : 'Chameleon Wins!';
-        resultMessage = `The group voted for ${mostVotedName}, but they weren't the Chameleon!`;
+        // Agent escaped
+        resultIcon = iWasChameleon ? '🕵️' : '😅';
+        resultTitle = iWasChameleon ? 'You Escaped!' : 'Agent Wins!';
+        resultMessage = `The group voted for ${mostVotedName}, but they weren't the Undercover Agent!`;
         document.getElementById('result-title').className = 'result-title ' + (iWasChameleon ? 'success' : 'failure');
       }
 
